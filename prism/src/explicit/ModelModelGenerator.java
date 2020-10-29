@@ -201,4 +201,19 @@ public class ModelModelGenerator implements ModelGenerator
 	{
 		return model.getStatesList().get(trans.get(i).succs.get(offset));
 	}
+
+	@Override
+	public boolean isLabelTrue(int i) {
+		throw PrismException('Labels in the explicit.Model interface are unordered')
+	}
+
+		@Override
+	public boolean isLabelTrue(String label) {
+		if (model.hasLabel(label)) {
+			return model.getLabelStates(label).contains(sExplore);
+		}
+		else {
+			return False;
+		}
+	}
 }
