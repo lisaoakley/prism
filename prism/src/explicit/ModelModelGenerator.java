@@ -28,6 +28,7 @@ package explicit;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -203,17 +204,24 @@ public class ModelModelGenerator implements ModelGenerator
 	}
 
 	@Override
+	/**
+	 * {@inheritDoc}
+	 * Note: labels are ordered alphabetically by name.
+	 */
 	public boolean isLabelTrue(int i) {
-		throw PrismException('Labels in the explicit.Model interface are unordered')
+		// Model labels are unordered, so we order them alphabetically
+		List <String> labels = new ArrayList<String>(model.getLabels());
+		Collections.sort(labels);
+		return isLabelTrue(labels.get(i));
 	}
 
-		@Override
+	@Override
 	public boolean isLabelTrue(String label) {
 		if (model.hasLabel(label)) {
-			return model.getLabelStates(label).contains(sExplore);
+			return model.getLabelStates(label).get(sExplore);
 		}
 		else {
-			return False;
+			return false;
 		}
 	}
 }
